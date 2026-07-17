@@ -1,0 +1,29 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: no
+    ports:
+      - "127.0.0.1:8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://database:5432/chupapo
+      SPRING_DATASOURCE_USERNAME: chupapo
+      SPRING_DATASOURCE_PASSWORD: chupapo
+      SPRING_JPA_HIBERNATE_DDL_AUTO: create-drop
+    depends_on:
+      database:
+        condition: service_healthy
+
+  database:
+    image: postgres:18-alpine
+    restart: no
+    environment:
+      POSTGRES_DB: chupapo
+      POSTGRES_USER: chupapo
+      POSTGRES_PASSWORD: chupapo
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U chupapo -d chupapo"]
+      interval: 2s
+      timeout: 5s
+      retries: 15

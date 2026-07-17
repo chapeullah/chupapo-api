@@ -1,0 +1,11 @@
+package org.chapeullah.chupapoapi.user.exception;
+
+public class UserAlreadyExistsException extends RuntimeException {
+    public UserAlreadyExistsException(Long id) {
+        super("User with id '" + id + "' already exists");
+    }
+
+    public UserAlreadyExistsException(String username) {
+        super("User with username '" + username + "' already exists");
+    }
+}
