@@ -1,23 +1,22 @@
-package org.chapeullah.chupapoapi.user.model;
+package org.chapeullah.chupapoapi.iam.account.model;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+import org.chapeullah.chupapoapi.iam.access.model.Role;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.Instant;
 
-@Getter @Setter
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@Table(name = "users")
-public class User {
+@Table(name = "accounts")
+public class Account {
 
     @Id
-    @Setter(AccessLevel.NONE)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -28,26 +27,30 @@ public class User {
     private String passwordHash;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "role_name", nullable = false)
+    @JoinColumn(name = "role", nullable = false)
     private Role role;
 
     @Column(name = "enabled", nullable = false)
     private boolean enabled = true;
 
     @CreationTimestamp
-    @Setter(AccessLevel.NONE)
     @Column(name = "created_at", nullable = false, updatable = false)
     private Instant createdAt;
 
     @UpdateTimestamp
-    @Setter(AccessLevel.NONE)
     @Column(name = "updated_at", nullable = false)
     private Instant updatedAt;
 
-    public User(String username, String passwordHash, Role role) {
+    public Account(String username, String passwordHash, Role role) {
         this.username = username;
         this.passwordHash = passwordHash;
         this.role = role;
     }
+
+    public void rename(String username) { this.username = username; }
+    public void changePasswordHash(String passwordHash) { this.passwordHash = passwordHash; }
+    public void assignRole(Role role) { this.role = role; }
+    public void enable() { this.enabled = true; }
+    public void disable() { this.enabled = false; }
 
 }

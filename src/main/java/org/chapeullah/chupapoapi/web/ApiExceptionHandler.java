@@ -1,0 +1,37 @@
+package org.chapeullah.chupapoapi.web;
+
+import org.chapeullah.chupapoapi.iam.access.exception.RoleAlreadyExistsException;
+import org.chapeullah.chupapoapi.iam.access.exception.RoleNotFoundException;
+import org.chapeullah.chupapoapi.iam.account.exception.AccountAlreadyExistsException;
+import org.chapeullah.chupapoapi.iam.account.exception.AccountNotFoundException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ProblemDetail;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+@RestControllerAdvice
+public class ApiExceptionHandler {
+
+    @ExceptionHandler({
+            AccountNotFoundException.class,
+            RoleNotFoundException.class
+    })
+    public ProblemDetail handleNotFound(RuntimeException exception) {
+        return problem(HttpStatus.NOT_FOUND, exception.getMessage());
+    }
+
+    @ExceptionHandler({
+            AccountAlreadyExistsException.class,
+            RoleAlreadyExistsException.class
+    })
+    public ProblemDetail handleAlreadyExists(RuntimeException exception) {
+        return problem(HttpStatus.CONFLICT, exception.getMessage());
+    }
+
+    private ProblemDetail problem(HttpStatus status, String message) {
+        ProblemDetail problem = ProblemDetail.forStatusAndDetail(status, message);
+        problem.setTitle(status.getReasonPhrase());
+        return problem;
+    }
+
+}

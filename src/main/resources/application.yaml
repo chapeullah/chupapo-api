@@ -4,8 +4,8 @@ spring:
 
   datasource:
     url: jdbc:postgresql://localhost:5432/chupapo
-    username: postgres
-    password: postgres
+    username: chupapo
+    password: chupapo
 
   jpa:
     hibernate:
