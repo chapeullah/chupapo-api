@@ -3,7 +3,7 @@ package org.chapeullah.chupapoapi.iam.account.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
-public record ResetPasswordRequest(
+public record UpdateAccountPasswordRequest(
         @NotBlank(message = "Password must not be blank")
         @Size(
                 min = 12,

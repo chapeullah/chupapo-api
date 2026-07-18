@@ -3,7 +3,9 @@ package org.chapeullah.chupapoapi.iam.account.application;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.chapeullah.chupapoapi.iam.access.application.RoleService;
+import org.chapeullah.chupapoapi.iam.access.exception.RoleNotFoundException;
 import org.chapeullah.chupapoapi.iam.access.model.Role;
+import org.chapeullah.chupapoapi.iam.access.repository.RoleRepository;
 import org.chapeullah.chupapoapi.iam.account.dto.*;
 import org.chapeullah.chupapoapi.iam.account.exception.AccountAlreadyExistsException;
 import org.chapeullah.chupapoapi.iam.account.exception.AccountNotFoundException;
@@ -18,70 +20,78 @@ import org.springframework.transaction.annotation.Transactional;
 public class AccountService {
 
     private final AccountRepository accountRepository;
-    private final RoleService roleService;
     private final PasswordEncoder passwordEncoder;
+    private final RoleRepository roleRepository;
 
     @Transactional
     public AccountResponse createAccount(@Valid CreateAccountRequest request) {
         if (accountRepository.existsByUsername(request.username()))
             throw new AccountAlreadyExistsException(request.username());
-        Role role = roleService.getRole(request.roleName());
-        Account account =
-                new Account(request.username(), passwordEncoder.encode(request.password()), role);
+        Account account = new Account(
+                request.username(),
+                passwordEncoder.encode(request.password()),
+                findRole(request.roleId()));
         return AccountResponse.from(accountRepository.save(account));
     }
 
     @Transactional(readOnly = true)
-    public AccountResponse getAccountById(Long id) {
-        return AccountResponse.from(findAccount(id));
+    public AccountResponse getAccount(Long accountId) {
+        return AccountResponse.from(findAccount(accountId));
     }
 
     @Transactional
-    public AccountResponse renameAccount(Long id, RenameAccountRequest request) {
-        Account account = findAccount(id);
+    public AccountResponse updateAccountUsername(Long accountId, UpdateAccountUsernameRequest request) {
+        Account account = findAccount(accountId);
         if (!account.getUsername().equals(request.username())
                 && accountRepository.existsByUsername(request.username()))
             throw new AccountAlreadyExistsException(request.username());
-        account.rename(request.username());
+        account.setUsername(request.username());
         return AccountResponse.from(accountRepository.save(account));
     }
 
     @Transactional
-    public AccountResponse assignRole(Long id, AssignAccountRoleRequest request) {
-        Account account = findAccount(id);
-        account.assignRole(roleService.getRole(request.roleName()));
+    public AccountResponse updateAccountRole(Long accountId, UpdateAccountRoleRequest request) {
+        Account account = findAccount(accountId);
+        account.setRole(findRole(request.roleId()));
         return AccountResponse.from(accountRepository.save(account));
     }
 
     @Transactional
-    public AccountResponse enableAccount(Long id) {
-        Account account = findAccount(id);
-        account.enable();
+    public AccountResponse updateAccountPassword(Long accountId, UpdateAccountPasswordRequest request) {
+        Account account = findAccount(accountId);
+        account.setPasswordHash(passwordEncoder.encode(request.password()));
         return AccountResponse.from(accountRepository.save(account));
     }
 
     @Transactional
-    public AccountResponse disableAccount(Long id) {
-        Account account = findAccount(id);
-        account.disable();
+    public AccountResponse enableAccount(Long accountId) {
+        Account account = findAccount(accountId);
+        account.setEnabled(true);
         return AccountResponse.from(accountRepository.save(account));
     }
 
     @Transactional
-    public AccountResponse resetPassword(Long id, ResetPasswordRequest request) {
-        Account account = findAccount(id);
-        account.changePasswordHash(passwordEncoder.encode(request.password()));
+    public AccountResponse disableAccount(Long accountId) {
+        Account account = findAccount(accountId);
+        account.setEnabled(false);
         return AccountResponse.from(accountRepository.save(account));
     }
 
     @Transactional
-    public void deleteAccount(Long id) {
-        accountRepository.deleteById(id);
+    public void deleteAccount(Long accountId) {
+        if (accountRepository.existsById(accountId))
+            throw new AccountAlreadyExistsException(accountId);
+        accountRepository.deleteById(accountId);
     }
 
-    private Account findAccount(Long id) {
-        return accountRepository.findById(id)
-                .orElseThrow(() -> new AccountNotFoundException(id));
+    private Account findAccount(Long accountId) {
+        return accountRepository.findById(accountId)
+                .orElseThrow(() -> new AccountNotFoundException(accountId));
+    }
+
+    private Role findRole(Long roleId) {
+        return roleRepository.findById(roleId)
+                .orElseThrow(() -> new RoleNotFoundException(roleId));
     }
 
 }

@@ -2,6 +2,7 @@ package org.chapeullah.chupapoapi.bootstrap;
 
 import lombok.RequiredArgsConstructor;
 import org.chapeullah.chupapoapi.iam.access.application.RoleService;
+import org.chapeullah.chupapoapi.iam.access.dto.CreateRoleRequest;
 import org.chapeullah.chupapoapi.iam.access.model.Permission;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -19,16 +20,15 @@ public class DefaultRolesInitializer implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) {
-        roleService.ensureRole(
+        roleService.createRole(new CreateRoleRequest(
                 "ADMIN",
-                "Full access",
-                Set.of(Permission.values()));
-
-        roleService.ensureRole(
+                "Full-rights",
+                Set.of(Permission.values())));
+        roleService.createRole(new CreateRoleRequest(
                 "VIEWER",
-                "Read-only access",
+                "Read-only",
                 Set.of(
-                        Permission.ACCOUNTS_READ,
-                        Permission.ROLES_READ));
+                        Permission.ROLES_READ,
+                        Permission.ACCOUNTS_READ)));
     }
 }

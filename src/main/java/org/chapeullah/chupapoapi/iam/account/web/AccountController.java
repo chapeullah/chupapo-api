@@ -33,50 +33,50 @@ public class AccountController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public AccountResponse getAccount(@PathVariable Long id) {
-        return accountService.getAccountById(id);
+    public AccountResponse getAccount(@PathVariable(name = "id") Long accountId) {
+        return accountService.getAccount(accountId);
     }
 
     @PutMapping("/{id}/username")
     @ResponseStatus(HttpStatus.OK)
-    public AccountResponse renameAccount(
-            @PathVariable Long id,
-            @Valid @RequestBody RenameAccountRequest request) {
-        return accountService.renameAccount(id, request);
+    public AccountResponse updateAccountUsername(
+            @PathVariable(name = "id") Long accountId,
+            @Valid @RequestBody UpdateAccountUsernameRequest request) {
+        return accountService.updateAccountUsername(accountId, request);
     }
 
     @PutMapping("/{id}/role")
     @ResponseStatus(HttpStatus.OK)
-    public AccountResponse assignRole(
-            @PathVariable Long id,
-            @Valid @RequestBody AssignAccountRoleRequest request) {
-        return accountService.assignRole(id, request);
+    public AccountResponse updateAccountRole(
+            @PathVariable(name = "id") Long accountId,
+            @Valid @RequestBody UpdateAccountRoleRequest request) {
+        return accountService.updateAccountRole(accountId, request);
     }
 
     @PutMapping("/{id}/password")
     @ResponseStatus(HttpStatus.OK)
-    public AccountResponse resetPassword(
-            @PathVariable Long id,
-            @Valid @RequestBody ResetPasswordRequest request) {
-        return accountService.resetPassword(id, request);
+    public AccountResponse updateAccountPassword(
+            @PathVariable(name = "id") Long accountId,
+            @Valid @RequestBody UpdateAccountPasswordRequest request) {
+        return accountService.updateAccountPassword(accountId, request);
     }
 
     @PostMapping("/{id}/enable")
     @ResponseStatus(HttpStatus.OK)
-    public AccountResponse enableAccount(@PathVariable Long id) {
-        return accountService.enableAccount(id);
+    public AccountResponse enableAccount(@PathVariable(name = "id") Long accountId) {
+        return accountService.enableAccount(accountId);
     }
 
     @PostMapping("/{id}/disable")
     @ResponseStatus(HttpStatus.OK)
-    public AccountResponse disableAccount(@PathVariable Long id) {
-        return accountService.disableAccount(id);
+    public AccountResponse disableAccount(@PathVariable(name = "id") Long accountId) {
+        return accountService.disableAccount(accountId);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteAccount(@PathVariable Long id) {
-        accountService.deleteAccount(id);
+    public void deleteAccount(@PathVariable(name = "id") Long accountId) {
+        accountService.deleteAccount(accountId);
     }
 
 }

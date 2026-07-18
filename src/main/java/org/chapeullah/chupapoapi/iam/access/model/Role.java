@@ -1,15 +1,6 @@
 package org.chapeullah.chupapoapi.iam.access.model;
 
-import jakarta.persistence.CollectionTable;
-import jakarta.persistence.Column;
-import jakarta.persistence.ElementCollection;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,13 +16,18 @@ import java.util.Set;
 public class Role {
 
     @Id
-    @Setter(AccessLevel.NONE)
-    @Column(name = "name", nullable = false, length = 32)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Setter
+    @Column(name = "name", unique = true, nullable = false, length = 32)
     private String name;
 
+    @Setter
     @Column(name = "description", nullable = false)
     private String description;
 
+    @SuppressWarnings("FieldMayBeFinal")
     @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(
             name = "role_permissions",
@@ -43,12 +39,12 @@ public class Role {
     public Role(String name, String description, Set<Permission> permissions) {
         this.name = name;
         this.description = description;
-        this.permissions = new HashSet<>(permissions);
+        this.permissions.addAll(permissions);
     }
 
-    public void update(String description, Set<Permission> permissions) {
-        this.description = description;
+    public void updatePermissions(Set<Permission> permissions) {
         this.permissions.clear();
         this.permissions.addAll(permissions);
     }
+
 }

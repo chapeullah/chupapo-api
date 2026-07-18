@@ -18,8 +18,8 @@ public class TemporaryAccountsInitializer implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) {
         accountService.createAccount(
-                new CreateAccountRequest("admin", "password-hash", "ADMIN"));
+                new CreateAccountRequest("admin", "password-hash", 1L));
         accountService.createAccount(
-                new CreateAccountRequest("PRIVET", "POKA123456", "ADMIN"));
+                new CreateAccountRequest("PRIVET", "POKA123456", 2L));
     }
 }

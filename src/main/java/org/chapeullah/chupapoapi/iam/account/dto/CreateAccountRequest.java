@@ -1,8 +1,6 @@
 package org.chapeullah.chupapoapi.iam.account.dto;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 
 public record CreateAccountRequest(
         @NotBlank(message = "Username must not be blank")
@@ -22,6 +20,6 @@ public record CreateAccountRequest(
                 message = "Password must be between 12 and 128 characters")
         String password,
 
-        @NotBlank(message = "Role name must not be blank")
-        @Size(max = 32, message = "Role name must not exceed 32 characters")
-        String roleName) {}
+        @NotNull(message = "Role ID must not be null")
+        @Positive(message = "Role ID must be positive")
+        Long roleId) {}

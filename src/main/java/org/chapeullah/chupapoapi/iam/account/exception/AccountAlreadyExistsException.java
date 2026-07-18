@@ -6,4 +6,8 @@ public class AccountAlreadyExistsException extends RuntimeException {
         super("Account with username '" + username + "' already exists");
     }
 
+    public AccountAlreadyExistsException(Long id) {
+        super("Account with id '" + id + "' already exists");
+    }
+
 }

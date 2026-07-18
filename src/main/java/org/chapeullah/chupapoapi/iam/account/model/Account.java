@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.chapeullah.chupapoapi.iam.access.model.Role;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -20,16 +21,20 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Setter
     @Column(name = "username", length = 32, unique = true, nullable = false)
     private String username;
 
+    @Setter
     @Column(name = "password_hash", nullable = false)
     private String passwordHash;
 
+    @Setter
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "role", nullable = false)
     private Role role;
 
+    @Setter
     @Column(name = "enabled", nullable = false)
     private boolean enabled = true;
 
@@ -46,11 +51,5 @@ public class Account {
         this.passwordHash = passwordHash;
         this.role = role;
     }
-
-    public void rename(String username) { this.username = username; }
-    public void changePasswordHash(String passwordHash) { this.passwordHash = passwordHash; }
-    public void assignRole(Role role) { this.role = role; }
-    public void enable() { this.enabled = true; }
-    public void disable() { this.enabled = false; }
 
 }
