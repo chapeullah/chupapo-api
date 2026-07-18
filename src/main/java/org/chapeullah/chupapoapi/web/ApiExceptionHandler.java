@@ -7,6 +7,7 @@ import org.chapeullah.chupapoapi.iam.account.exception.AccountNotFoundException;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -27,6 +28,11 @@ public class ApiExceptionHandler {
     })
     public ProblemDetail handleAlreadyExists(RuntimeException exception) {
         return problem(HttpStatus.CONFLICT, exception.getMessage());
+    }
+
+    @ExceptionHandler(AuthenticationException.class)
+    public ProblemDetail handleAuthenticationFailure(AuthenticationException exception) {
+        return problem(HttpStatus.UNAUTHORIZED, "Invalid username or password");
     }
 
     private ProblemDetail problem(HttpStatus status, String message) {

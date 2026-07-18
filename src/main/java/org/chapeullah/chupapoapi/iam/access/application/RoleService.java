@@ -7,7 +7,6 @@ import org.chapeullah.chupapoapi.iam.access.exception.RoleAlreadyExistsException
 import org.chapeullah.chupapoapi.iam.access.exception.RoleNotFoundException;
 import org.chapeullah.chupapoapi.iam.access.model.Role;
 import org.chapeullah.chupapoapi.iam.access.repository.RoleRepository;
-import org.chapeullah.chupapoapi.iam.account.exception.AccountAlreadyExistsException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -65,7 +64,7 @@ public class RoleService {
 
     @Transactional
     public void deleteRole(Long roleId) {
-        if (roleRepository.existsById(roleId))
+        if (!roleRepository.existsById(roleId))
             throw new RoleNotFoundException(roleId);
         roleRepository.deleteById(roleId);
     }

@@ -16,7 +16,7 @@ public record RoleResponse(
                 role.getId(),
                 role.getName(),
                 role.getDescription(),
-                role.getPermissions());
+                Set.copyOf(role.getPermissions()));
     }
 
 }

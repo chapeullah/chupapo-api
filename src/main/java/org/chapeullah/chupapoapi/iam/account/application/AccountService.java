@@ -2,7 +2,6 @@ package org.chapeullah.chupapoapi.iam.account.application;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.chapeullah.chupapoapi.iam.access.application.RoleService;
 import org.chapeullah.chupapoapi.iam.access.exception.RoleNotFoundException;
 import org.chapeullah.chupapoapi.iam.access.model.Role;
 import org.chapeullah.chupapoapi.iam.access.repository.RoleRepository;
@@ -79,8 +78,8 @@ public class AccountService {
 
     @Transactional
     public void deleteAccount(Long accountId) {
-        if (accountRepository.existsById(accountId))
-            throw new AccountAlreadyExistsException(accountId);
+        if (!accountRepository.existsById(accountId))
+            throw new AccountNotFoundException(accountId);
         accountRepository.deleteById(accountId);
     }
 

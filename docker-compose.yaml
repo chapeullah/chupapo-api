@@ -10,7 +10,10 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://database:5432/chupapo
       SPRING_DATASOURCE_USERNAME: chupapo
       SPRING_DATASOURCE_PASSWORD: chupapo
-      SPRING_JPA_HIBERNATE_DDL_AUTO: create-drop
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      APP_BOOTSTRAP_ADMIN_USERNAME: ${BOOTSTRAP_ADMIN_USERNAME:-admin}
+      APP_BOOTSTRAP_ADMIN_PASSWORD: ${BOOTSTRAP_ADMIN_PASSWORD:-}
+      SESSION_COOKIE_SECURE: ${SESSION_COOKIE_SECURE:-false}
     depends_on:
       database:
         condition: service_healthy

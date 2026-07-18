@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.chapeullah.chupapoapi.iam.access.application.RoleService;
 import org.chapeullah.chupapoapi.iam.access.dto.*;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -15,6 +16,7 @@ public class RoleController {
     private final RoleService roleService;
 
     @PostMapping
+    @PreAuthorize("hasAuthority('ROLES_CREATE')")
     @ResponseStatus(HttpStatus.CREATED)
     public RoleResponse createRole(
             @Valid @RequestBody CreateRoleRequest request) {
@@ -22,12 +24,14 @@ public class RoleController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('ROLES_READ')")
     @ResponseStatus(HttpStatus.OK)
     public RoleResponse getRole(@PathVariable(name = "id") Long roleId) {
         return roleService.getRole(roleId);
     }
 
     @PutMapping("/{id}/name")
+    @PreAuthorize("hasAuthority('ROLES_UPDATE')")
     @ResponseStatus(HttpStatus.OK)
     public RoleResponse updateRoleName(
             @PathVariable(name = "id") Long roleId,
@@ -36,6 +40,7 @@ public class RoleController {
     }
 
     @PutMapping("/{id}/description")
+    @PreAuthorize("hasAuthority('ROLES_UPDATE')")
     @ResponseStatus(HttpStatus.OK)
     public RoleResponse updateDescription(
             @PathVariable(name = "id") Long roleId,
@@ -44,6 +49,7 @@ public class RoleController {
     }
 
     @PutMapping("/{id}/permissions")
+    @PreAuthorize("hasAuthority('ROLES_UPDATE')")
     @ResponseStatus(HttpStatus.OK)
     public RoleResponse updatePermissions(
             @PathVariable(name = "id") Long roleId,
@@ -52,6 +58,7 @@ public class RoleController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('ROLES_DELETE')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteRole(@PathVariable(name = "id") Long roleId) {
         roleService.deleteRole(roleId);

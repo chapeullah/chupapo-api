@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.chapeullah.chupapoapi.iam.account.application.AccountService;
 import org.chapeullah.chupapoapi.iam.account.dto.*;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -25,6 +26,7 @@ public class AccountController {
     private final AccountService accountService;
 
     @PostMapping
+    @PreAuthorize("hasAuthority('ACCOUNTS_CREATE')")
     @ResponseStatus(HttpStatus.CREATED)
     public AccountResponse createAccount(
             @Valid @RequestBody CreateAccountRequest request) {
@@ -32,12 +34,14 @@ public class AccountController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('ACCOUNTS_READ')")
     @ResponseStatus(HttpStatus.OK)
     public AccountResponse getAccount(@PathVariable(name = "id") Long accountId) {
         return accountService.getAccount(accountId);
     }
 
     @PutMapping("/{id}/username")
+    @PreAuthorize("hasAuthority('ACCOUNTS_UPDATE')")
     @ResponseStatus(HttpStatus.OK)
     public AccountResponse updateAccountUsername(
             @PathVariable(name = "id") Long accountId,
@@ -46,6 +50,7 @@ public class AccountController {
     }
 
     @PutMapping("/{id}/role")
+    @PreAuthorize("hasAuthority('ACCOUNTS_UPDATE')")
     @ResponseStatus(HttpStatus.OK)
     public AccountResponse updateAccountRole(
             @PathVariable(name = "id") Long accountId,
@@ -54,6 +59,7 @@ public class AccountController {
     }
 
     @PutMapping("/{id}/password")
+    @PreAuthorize("hasAuthority('ACCOUNTS_UPDATE')")
     @ResponseStatus(HttpStatus.OK)
     public AccountResponse updateAccountPassword(
             @PathVariable(name = "id") Long accountId,
@@ -62,18 +68,21 @@ public class AccountController {
     }
 
     @PostMapping("/{id}/enable")
+    @PreAuthorize("hasAuthority('ACCOUNTS_UPDATE')")
     @ResponseStatus(HttpStatus.OK)
     public AccountResponse enableAccount(@PathVariable(name = "id") Long accountId) {
         return accountService.enableAccount(accountId);
     }
 
     @PostMapping("/{id}/disable")
+    @PreAuthorize("hasAuthority('ACCOUNTS_UPDATE')")
     @ResponseStatus(HttpStatus.OK)
     public AccountResponse disableAccount(@PathVariable(name = "id") Long accountId) {
         return accountService.disableAccount(accountId);
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('ACCOUNTS_DELETE')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteAccount(@PathVariable(name = "id") Long accountId) {
         accountService.deleteAccount(accountId);
