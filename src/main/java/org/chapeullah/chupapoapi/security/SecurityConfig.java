@@ -1,7 +1,7 @@
 package org.chapeullah.chupapoapi.security;
 
-import org.chapeullah.chupapoapi.iam.account.model.Account;
-import org.chapeullah.chupapoapi.iam.account.repository.AccountRepository;
+import org.chapeullah.chupapoapi.account.model.Account;
+import org.chapeullah.chupapoapi.account.repository.AccountRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
