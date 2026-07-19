@@ -1,9 +1,9 @@
 package org.chapeullah.chupapoapi.bootstrap;
 
 import lombok.RequiredArgsConstructor;
-import org.chapeullah.chupapoapi.iam.authorization.model.Permission;
-import org.chapeullah.chupapoapi.iam.authorization.model.Role;
-import org.chapeullah.chupapoapi.iam.authorization.repository.RoleRepository;
+import org.chapeullah.chupapoapi.authorization.model.Permission;
+import org.chapeullah.chupapoapi.authorization.model.Role;
+import org.chapeullah.chupapoapi.authorization.repository.RoleRepository;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.core.annotation.Order;

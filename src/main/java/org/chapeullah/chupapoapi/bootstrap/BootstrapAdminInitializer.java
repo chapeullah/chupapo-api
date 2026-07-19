@@ -1,9 +1,9 @@
 package org.chapeullah.chupapoapi.bootstrap;
 
 import lombok.RequiredArgsConstructor;
-import org.chapeullah.chupapoapi.iam.authorization.application.RoleService;
-import org.chapeullah.chupapoapi.iam.account.application.AccountService;
-import org.chapeullah.chupapoapi.iam.account.dto.CreateAccountRequest;
+import org.chapeullah.chupapoapi.authorization.application.RoleService;
+import org.chapeullah.chupapoapi.account.application.AccountService;
+import org.chapeullah.chupapoapi.account.dto.CreateAccountRequest;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.core.annotation.Order;
