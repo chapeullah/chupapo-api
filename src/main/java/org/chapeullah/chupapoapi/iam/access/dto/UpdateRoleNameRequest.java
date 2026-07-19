@@ -11,6 +11,6 @@ public record UpdateRoleNameRequest(
                 max = 32,
                 message = "Role name must be between 5 and 32 characters")
         @Pattern(
-                regexp = "^[a-zA-Z_]+$",
-                message = "Role name may contain only English letters and underscores")
+                regexp = "^[a-zA-Z0-9_]+$",
+                message = "Role name may contain only English letters, digits, underscores")
         String name) {}

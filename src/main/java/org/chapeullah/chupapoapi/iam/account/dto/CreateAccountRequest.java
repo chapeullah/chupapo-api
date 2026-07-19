@@ -20,6 +20,12 @@ public record CreateAccountRequest(
                 message = "Password must be between 12 and 128 characters")
         String password,
 
-        @NotNull(message = "Role ID must not be null")
-        @Positive(message = "Role ID must be positive")
-        Long roleId) {}
+        @NotBlank(message = "Role name must not be blank")
+        @Size(
+                min = 5,
+                max = 32,
+                message = "Role name must be between 5 and 32 characters")
+        @Pattern(
+                regexp = "^[a-zA-Z_]+$",
+                message = "Role name may contain only English letters and underscores")
+        String roleName) {}

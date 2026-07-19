@@ -22,7 +22,17 @@ public class Account {
     private Long id;
 
     @Setter
-    @Column(name = "username", length = 32, unique = true, nullable = false)
+    @Column(
+            name = "username",
+            length = 32,
+            unique = true,
+            nullable = false, check = {
+                    @CheckConstraint(
+                            name = "ck_accounts_username_min_length",
+                            constraint = "char_length(username) >= 5"),
+                    @CheckConstraint(
+                            name = "ck_accounts_username_format",
+                            constraint = "username ~ '^[a-zA-Z0-9_]+$'")})
     private String username;
 
     @Setter

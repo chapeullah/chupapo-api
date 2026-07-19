@@ -20,11 +20,24 @@ public class Role {
     private Long id;
 
     @Setter
-    @Column(name = "name", unique = true, nullable = false, length = 32)
+    @Column(
+            name = "name",
+            unique = true,
+            nullable = false,
+            length = 32,
+            check = {
+                    @CheckConstraint(
+                            name = "ck_roles_name_min_length",
+                            constraint = "char_length(name) >= 5"),
+                    @CheckConstraint(
+                            name = "ck_roles_name_format",
+                            constraint = "name ~ '^[a-zA-Z0-9_]+$'")})
     private String name;
 
     @Setter
-    @Column(name = "description", nullable = false)
+    @Column(
+            name = "description",
+            length = 256)
     private String description;
 
     @SuppressWarnings("FieldMayBeFinal")

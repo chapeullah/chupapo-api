@@ -29,7 +29,7 @@ public class AccountService {
         Account account = new Account(
                 request.username(),
                 passwordEncoder.encode(request.password()),
-                findRole(request.roleId()));
+                findRole(request.roleName()));
         return AccountResponse.from(accountRepository.save(account));
     }
 
@@ -91,6 +91,11 @@ public class AccountService {
     private Role findRole(Long roleId) {
         return roleRepository.findById(roleId)
                 .orElseThrow(() -> new RoleNotFoundException(roleId));
+    }
+
+    private Role findRole(String roleName) {
+        return roleRepository.findByName(roleName)
+                .orElseThrow(() -> new RoleNotFoundException(roleName));
     }
 
 }

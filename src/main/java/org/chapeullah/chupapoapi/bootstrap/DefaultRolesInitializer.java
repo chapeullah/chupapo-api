@@ -27,12 +27,9 @@ public class DefaultRolesInitializer implements ApplicationRunner {
                     Set.of(Permission.values())));
         }
         if (!roleRepository.existsByName("VIEWER")) {
-            roleRepository.save(new Role(
-                    "VIEWER",
-                    "Read-only",
-                    Set.of(
-                            Permission.ROLES_READ,
-                            Permission.ACCOUNTS_READ)));
+            roleRepository.save(new Role("VIEWER", "Read-only", Set.of(
+                    Permission.ROLES_READ,
+                    Permission.ACCOUNTS_READ)));
         }
     }
 }
