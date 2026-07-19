@@ -1,8 +1,8 @@
-package org.chapeullah.chupapoapi.iam.auth.web;
+package org.chapeullah.chupapoapi.iam.authentication.web;
 
 import lombok.RequiredArgsConstructor;
-import org.chapeullah.chupapoapi.iam.auth.dto.CsrfResponse;
-import org.chapeullah.chupapoapi.iam.auth.dto.CurrentAccountResponse;
+import org.chapeullah.chupapoapi.iam.authentication.dto.CsrfResponse;
+import org.chapeullah.chupapoapi.iam.authentication.dto.CurrentAccountResponse;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.csrf.CsrfToken;
@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
-public class AuthController {
+public class AuthenticationController {
 
     @GetMapping("/csrf")
     public CsrfResponse csrf(CsrfToken csrfToken) {

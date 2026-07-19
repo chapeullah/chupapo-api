@@ -1,9 +1,9 @@
-package org.chapeullah.chupapoapi.iam.access.web;
+package org.chapeullah.chupapoapi.iam.authorization.web;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.chapeullah.chupapoapi.iam.access.application.RoleService;
-import org.chapeullah.chupapoapi.iam.access.dto.*;
+import org.chapeullah.chupapoapi.iam.authorization.application.RoleService;
+import org.chapeullah.chupapoapi.iam.authorization.dto.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;

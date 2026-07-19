@@ -1,4 +1,4 @@
-package org.chapeullah.chupapoapi.iam.access.exception;
+package org.chapeullah.chupapoapi.iam.authorization.exception;
 
 public class RoleNotFoundException extends RuntimeException {
 

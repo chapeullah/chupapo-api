@@ -1,4 +1,4 @@
-package org.chapeullah.chupapoapi.iam.auth.dto;
+package org.chapeullah.chupapoapi.iam.authentication.dto;
 
 import java.util.Set;
 

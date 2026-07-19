@@ -1,7 +1,7 @@
-package org.chapeullah.chupapoapi.iam.access.dto;
+package org.chapeullah.chupapoapi.iam.authorization.dto;
 
-import org.chapeullah.chupapoapi.iam.access.model.Permission;
-import org.chapeullah.chupapoapi.iam.access.model.Role;
+import org.chapeullah.chupapoapi.iam.authorization.model.Permission;
+import org.chapeullah.chupapoapi.iam.authorization.model.Role;
 
 import java.util.Set;
 

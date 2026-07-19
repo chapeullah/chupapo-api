@@ -1,4 +1,4 @@
-package org.chapeullah.chupapoapi.iam.access.dto;
+package org.chapeullah.chupapoapi.iam.authorization.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

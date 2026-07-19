@@ -1,6 +1,6 @@
-package org.chapeullah.chupapoapi.iam.access.repository;
+package org.chapeullah.chupapoapi.iam.authorization.repository;
 
-import org.chapeullah.chupapoapi.iam.access.model.Role;
+import org.chapeullah.chupapoapi.iam.authorization.model.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

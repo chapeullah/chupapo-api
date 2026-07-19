@@ -2,9 +2,9 @@ package org.chapeullah.chupapoapi.iam.account.application;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.chapeullah.chupapoapi.iam.access.exception.RoleNotFoundException;
-import org.chapeullah.chupapoapi.iam.access.model.Role;
-import org.chapeullah.chupapoapi.iam.access.repository.RoleRepository;
+import org.chapeullah.chupapoapi.iam.authorization.exception.RoleNotFoundException;
+import org.chapeullah.chupapoapi.iam.authorization.model.Role;
+import org.chapeullah.chupapoapi.iam.authorization.repository.RoleRepository;
 import org.chapeullah.chupapoapi.iam.account.dto.*;
 import org.chapeullah.chupapoapi.iam.account.exception.AccountAlreadyExistsException;
 import org.chapeullah.chupapoapi.iam.account.exception.AccountNotFoundException;

@@ -1,4 +1,4 @@
-package org.chapeullah.chupapoapi;
+package org.chapeullah.chupapoapi.security;
 
 import org.chapeullah.chupapoapi.iam.account.model.Account;
 import org.chapeullah.chupapoapi.iam.account.repository.AccountRepository;

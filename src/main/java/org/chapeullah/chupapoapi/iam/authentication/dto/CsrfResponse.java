@@ -1,4 +1,4 @@
-package org.chapeullah.chupapoapi.iam.auth.dto;
+package org.chapeullah.chupapoapi.iam.authentication.dto;
 
 public record CsrfResponse(
         String headerName,

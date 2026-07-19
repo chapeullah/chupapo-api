@@ -1,7 +1,7 @@
 package org.chapeullah.chupapoapi.web;
 
-import org.chapeullah.chupapoapi.iam.access.exception.RoleAlreadyExistsException;
-import org.chapeullah.chupapoapi.iam.access.exception.RoleNotFoundException;
+import org.chapeullah.chupapoapi.iam.authorization.exception.RoleAlreadyExistsException;
+import org.chapeullah.chupapoapi.iam.authorization.exception.RoleNotFoundException;
 import org.chapeullah.chupapoapi.iam.account.exception.AccountAlreadyExistsException;
 import org.chapeullah.chupapoapi.iam.account.exception.AccountNotFoundException;
 

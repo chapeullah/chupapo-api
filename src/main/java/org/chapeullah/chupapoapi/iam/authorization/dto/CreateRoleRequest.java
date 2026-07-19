@@ -1,7 +1,7 @@
-package org.chapeullah.chupapoapi.iam.access.dto;
+package org.chapeullah.chupapoapi.iam.authorization.dto;
 
 import jakarta.validation.constraints.*;
-import org.chapeullah.chupapoapi.iam.access.model.Permission;
+import org.chapeullah.chupapoapi.iam.authorization.model.Permission;
 
 import java.util.Set;
 

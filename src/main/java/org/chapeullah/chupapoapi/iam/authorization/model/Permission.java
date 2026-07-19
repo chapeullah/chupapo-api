@@ -1,4 +1,4 @@
-package org.chapeullah.chupapoapi.iam.access.model;
+package org.chapeullah.chupapoapi.iam.authorization.model;
 
 public enum Permission {
 

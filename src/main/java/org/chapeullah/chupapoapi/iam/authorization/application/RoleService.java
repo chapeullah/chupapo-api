@@ -1,12 +1,12 @@
-package org.chapeullah.chupapoapi.iam.access.application;
+package org.chapeullah.chupapoapi.iam.authorization.application;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.chapeullah.chupapoapi.iam.access.dto.*;
-import org.chapeullah.chupapoapi.iam.access.exception.RoleAlreadyExistsException;
-import org.chapeullah.chupapoapi.iam.access.exception.RoleNotFoundException;
-import org.chapeullah.chupapoapi.iam.access.model.Role;
-import org.chapeullah.chupapoapi.iam.access.repository.RoleRepository;
+import org.chapeullah.chupapoapi.iam.authorization.dto.*;
+import org.chapeullah.chupapoapi.iam.authorization.exception.RoleAlreadyExistsException;
+import org.chapeullah.chupapoapi.iam.authorization.exception.RoleNotFoundException;
+import org.chapeullah.chupapoapi.iam.authorization.model.Role;
+import org.chapeullah.chupapoapi.iam.authorization.repository.RoleRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
