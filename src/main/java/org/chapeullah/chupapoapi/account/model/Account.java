@@ -26,7 +26,8 @@ public class Account {
             name = "username",
             length = 32,
             unique = true,
-            nullable = false, check = {
+            nullable = false,
+            check = {
                     @CheckConstraint(
                             name = "ck_accounts_username_min_length",
                             constraint = "char_length(username) >= 5"),

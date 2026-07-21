@@ -15,9 +15,9 @@ public record CreateAccountRequest(
 
         @NotBlank(message = "Password must not be blank")
         @Size(
-                min = 12,
+                min = 15,
                 max = 128,
-                message = "Password must be between 12 and 128 characters")
+                message = "Password must be between 15 and 128 characters")
         String password,
 
         @NotBlank(message = "Role name must not be blank")

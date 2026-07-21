@@ -3,7 +3,6 @@ package org.chapeullah.chupapoapi.authorization.application;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.chapeullah.chupapoapi.authorization.dto.*;
-import org.chapeullah.chupapoapi.iam.authorization.dto.*;
 import org.chapeullah.chupapoapi.authorization.exception.RoleAlreadyExistsException;
 import org.chapeullah.chupapoapi.authorization.exception.RoleNotFoundException;
 import org.chapeullah.chupapoapi.authorization.model.Role;

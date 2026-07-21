@@ -6,7 +6,6 @@ import org.chapeullah.chupapoapi.account.dto.*;
 import org.chapeullah.chupapoapi.authorization.exception.RoleNotFoundException;
 import org.chapeullah.chupapoapi.authorization.model.Role;
 import org.chapeullah.chupapoapi.authorization.repository.RoleRepository;
-import org.chapeullah.chupapoapi.iam.account.dto.*;
 import org.chapeullah.chupapoapi.account.exception.AccountAlreadyExistsException;
 import org.chapeullah.chupapoapi.account.exception.AccountNotFoundException;
 import org.chapeullah.chupapoapi.account.model.Account;
@@ -14,8 +13,10 @@ import org.chapeullah.chupapoapi.account.repository.AccountRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 
 @Service
+@Validated
 @RequiredArgsConstructor
 public class AccountService {
 

@@ -19,6 +19,6 @@ public class BootstrapAdminInitializer implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) {
-        accountService.createAccount(new CreateAccountRequest("ADMIN", "ADMIN1234567", "ADMIN"));
+            accountService.createAccount(new CreateAccountRequest("ADMIN", "@DMIN1234567890", "ADMIN"));
     }
 }
