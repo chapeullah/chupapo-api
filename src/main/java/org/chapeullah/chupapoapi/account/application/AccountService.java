@@ -1,6 +1,8 @@
 package org.chapeullah.chupapoapi.account.application;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.chapeullah.chupapoapi.account.dto.*;
 import org.chapeullah.chupapoapi.authorization.exception.RoleNotFoundException;
@@ -10,6 +12,8 @@ import org.chapeullah.chupapoapi.account.exception.AccountAlreadyExistsException
 import org.chapeullah.chupapoapi.account.exception.AccountNotFoundException;
 import org.chapeullah.chupapoapi.account.model.Account;
 import org.chapeullah.chupapoapi.account.repository.AccountRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,12 +40,19 @@ public class AccountService {
     }
 
     @Transactional(readOnly = true)
-    public AccountResponse getAccount(Long accountId) {
+    public Page<AccountResponse> getAccounts(@NotNull Pageable pageable) {
+        return accountRepository.findAll(pageable).map(AccountResponse::from);
+    }
+
+    @Transactional(readOnly = true)
+    public AccountResponse getAccount(@NotNull @Positive Long accountId) {
         return AccountResponse.from(findAccount(accountId));
     }
 
     @Transactional
-    public AccountResponse updateAccountUsername(Long accountId, UpdateAccountUsernameRequest request) {
+    public AccountResponse updateAccountUsername(
+            @NotNull @Positive Long accountId,
+            @Valid UpdateAccountUsernameRequest request) {
         Account account = findAccount(accountId);
         if (!account.getUsername().equals(request.username())
                 && accountRepository.existsByUsername(request.username()))
@@ -51,51 +62,55 @@ public class AccountService {
     }
 
     @Transactional
-    public AccountResponse updateAccountRole(Long accountId, UpdateAccountRoleRequest request) {
+    public AccountResponse updateAccountRole(
+            @NotNull @Positive Long accountId,
+            @Valid UpdateAccountRoleRequest request) {
         Account account = findAccount(accountId);
         account.setRole(findRole(request.roleId()));
         return AccountResponse.from(accountRepository.save(account));
     }
 
     @Transactional
-    public AccountResponse updateAccountPassword(Long accountId, UpdateAccountPasswordRequest request) {
+    public AccountResponse updateAccountPassword(
+            @NotNull @Positive Long accountId,
+            @Valid UpdateAccountPasswordRequest request) {
         Account account = findAccount(accountId);
         account.setPasswordHash(passwordEncoder.encode(request.password()));
         return AccountResponse.from(accountRepository.save(account));
     }
 
     @Transactional
-    public AccountResponse enableAccount(Long accountId) {
+    public AccountResponse enableAccount(@NotNull @Positive Long accountId) {
         Account account = findAccount(accountId);
         account.setEnabled(true);
         return AccountResponse.from(accountRepository.save(account));
     }
 
     @Transactional
-    public AccountResponse disableAccount(Long accountId) {
+    public AccountResponse disableAccount(@NotNull @Positive Long accountId) {
         Account account = findAccount(accountId);
         account.setEnabled(false);
         return AccountResponse.from(accountRepository.save(account));
     }
 
     @Transactional
-    public void deleteAccount(Long accountId) {
+    public void deleteAccount(@NotNull @Positive Long accountId) {
         if (!accountRepository.existsById(accountId))
             throw new AccountNotFoundException(accountId);
         accountRepository.deleteById(accountId);
     }
 
-    private Account findAccount(Long accountId) {
+    private Account findAccount(@NotNull @Positive Long accountId) {
         return accountRepository.findById(accountId)
                 .orElseThrow(() -> new AccountNotFoundException(accountId));
     }
 
-    private Role findRole(Long roleId) {
+    private Role findRole(@NotNull @Positive Long roleId) {
         return roleRepository.findById(roleId)
                 .orElseThrow(() -> new RoleNotFoundException(roleId));
     }
 
-    private Role findRole(String roleName) {
+    private Role findRole(@NotNull String roleName) {
         return roleRepository.findByName(roleName)
                 .orElseThrow(() -> new RoleNotFoundException(roleName));
     }

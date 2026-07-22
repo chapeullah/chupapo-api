@@ -4,6 +4,10 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.chapeullah.chupapoapi.account.application.AccountService;
 import org.chapeullah.chupapoapi.account.dto.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -31,6 +35,18 @@ public class AccountController {
     public AccountResponse createAccount(
             @Valid @RequestBody CreateAccountRequest request) {
         return accountService.createAccount(request);
+    }
+
+    @GetMapping
+    @PreAuthorize("hasAuthority('ACCOUNTS_READ')")
+    @ResponseStatus(HttpStatus.OK)
+    public Page<AccountResponse> getAccounts(
+            @PageableDefault(
+                    size = 10,
+                    sort = "id",
+                    direction = Sort.Direction.ASC)
+            Pageable pageable) {
+        return accountService.getAccounts(pageable);
     }
 
     @GetMapping("/{id}")

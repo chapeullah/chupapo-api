@@ -6,6 +6,6 @@ import jakarta.validation.constraints.Size;
 public record UpdateRoleDescriptionRequest(
         @NotBlank(message = "Description must not be blank")
         @Size(
-                max = 255,
-                message = "Description must not exceed 255 characters")
+                max = 256,
+                message = "Description must not exceed 256 characters")
         String description) {}

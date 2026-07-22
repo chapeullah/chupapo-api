@@ -19,7 +19,7 @@ server:
       tracking-modes: cookie
       cookie:
         http-only: true
-        secure: ${SESSION_COOKIE_SECURE:false}
+        secure: false
         same-site: lax
 
 app:

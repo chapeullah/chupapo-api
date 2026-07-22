@@ -4,6 +4,10 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.chapeullah.chupapoapi.authorization.application.RoleService;
 import org.chapeullah.chupapoapi.authorization.dto.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +25,18 @@ public class RoleController {
     public RoleResponse createRole(
             @Valid @RequestBody CreateRoleRequest request) {
         return roleService.createRole(request);
+    }
+
+    @GetMapping
+    @PreAuthorize("hasAuthority('ROLES_READ')")
+    @ResponseStatus(HttpStatus.OK)
+    public Page<RoleSummaryResponse> getRoles(
+            @PageableDefault(
+                    size = 10,
+                    sort = "id",
+                    direction = Sort.Direction.ASC)
+            Pageable pageable) {
+        return roleService.getRoles(pageable);
     }
 
     @GetMapping("/{id}")
