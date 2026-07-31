@@ -36,7 +36,7 @@ public class AccountService {
                 request.username(),
                 passwordEncoder.encode(request.password()),
                 findRole(request.roleName()));
-        return AccountResponse.from(accountRepository.save(account));
+        return AccountResponse.from(accountRepository.saveAndFlush(account));
     }
 
     @Transactional(readOnly = true)
@@ -58,7 +58,7 @@ public class AccountService {
                 && accountRepository.existsByUsername(request.username()))
             throw new AccountAlreadyExistsException(request.username());
         account.setUsername(request.username());
-        return AccountResponse.from(accountRepository.save(account));
+        return AccountResponse.from(accountRepository.saveAndFlush(account));
     }
 
     @Transactional
@@ -67,7 +67,7 @@ public class AccountService {
             @Valid UpdateAccountRoleRequest request) {
         Account account = findAccount(accountId);
         account.setRole(findRole(request.roleId()));
-        return AccountResponse.from(accountRepository.save(account));
+        return AccountResponse.from(accountRepository.saveAndFlush(account));
     }
 
     @Transactional
@@ -76,21 +76,21 @@ public class AccountService {
             @Valid UpdateAccountPasswordRequest request) {
         Account account = findAccount(accountId);
         account.setPasswordHash(passwordEncoder.encode(request.password()));
-        return AccountResponse.from(accountRepository.save(account));
+        return AccountResponse.from(accountRepository.saveAndFlush(account));
     }
 
     @Transactional
     public AccountResponse enableAccount(@NotNull @Positive Long accountId) {
         Account account = findAccount(accountId);
         account.setEnabled(true);
-        return AccountResponse.from(accountRepository.save(account));
+        return AccountResponse.from(accountRepository.saveAndFlush(account));
     }
 
     @Transactional
     public AccountResponse disableAccount(@NotNull @Positive Long accountId) {
         Account account = findAccount(accountId);
         account.setEnabled(false);
-        return AccountResponse.from(accountRepository.save(account));
+        return AccountResponse.from(accountRepository.saveAndFlush(account));
     }
 
     @Transactional
