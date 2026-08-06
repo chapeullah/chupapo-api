@@ -7,10 +7,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.chapeullah.chupapoapi.project.dto.CreateProjectRequest;
 import org.chapeullah.chupapoapi.project.dto.ProjectResponse;
+import org.chapeullah.chupapoapi.project.dto.UpdateProjectRequest;
 import org.chapeullah.chupapoapi.project.exception.ProjectAlreadyExistsException;
 import org.chapeullah.chupapoapi.project.exception.ProjectNotFoundException;
 import org.chapeullah.chupapoapi.project.model.Project;
 import org.chapeullah.chupapoapi.project.repository.ProjectRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
@@ -45,10 +48,30 @@ public class ProjectService {
         return ProjectResponse.from(savedProject);
     }
 
+    @Transactional(readOnly = true)
+    public Page<ProjectResponse> getProjects(@NotNull Pageable pageable) {
+        log.debug(
+                "Getting accounts: page={}, size={}",
+                pageable.getPageNumber(),
+                pageable.getPageSize());
+        return projectRepository.findAll(pageable).map(ProjectResponse::from);
+    }
+
     @Transactional
     public ProjectResponse getProject(@NotNull @Positive Long projectId) {
         log.debug("Getting project: projectId={}", projectId);
         return ProjectResponse.from(findProject(projectId));
+    }
+
+    @Transactional
+    public ProjectResponse updateProject(
+            @NotNull @Positive Long projectId,
+            @Valid UpdateProjectRequest request) {
+        Project project = findProject(projectId);
+        if (request.slug() != null) {
+            if (request.slug().equals(project.getSlug()))
+
+        }
     }
 
     @Transactional
