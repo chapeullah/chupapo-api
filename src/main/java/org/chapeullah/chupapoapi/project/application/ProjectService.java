@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.chapeullah.chupapoapi.project.dto.CreateProjectRequest;
 import org.chapeullah.chupapoapi.project.dto.ProjectResponse;
 import org.chapeullah.chupapoapi.project.exception.ProjectAlreadyExistsException;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
+@Slf4j
 @Service
 @Validated
 @RequiredArgsConstructor
@@ -38,11 +40,14 @@ public class ProjectService {
                         preview.language(),
                         preview.theme(),
                         preview.imageUrl()));
-        return ProjectResponse.from(projectRepository.saveAndFlush(project));
+        Project savedProject = projectRepository.saveAndFlush(project);
+        log.info("Project created: projectId={}", savedProject.getId());
+        return ProjectResponse.from(savedProject);
     }
 
     @Transactional
     public ProjectResponse getProject(@NotNull @Positive Long projectId) {
+        log.debug("Getting project: projectId={}", projectId);
         return ProjectResponse.from(findProject(projectId));
     }
 
@@ -51,6 +56,7 @@ public class ProjectService {
         if (!projectRepository.existsById(projectId))
             throw new ProjectNotFoundException(projectId);
         projectRepository.deleteById(projectId);
+        log.info("Project deleted: projectId={}", projectId);
     }
 
     private Project findProject(Long projectId) {

@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.chapeullah.chupapoapi.authorization.dto.*;
 import org.chapeullah.chupapoapi.authorization.exception.RoleAlreadyExistsException;
 import org.chapeullah.chupapoapi.authorization.exception.RoleNotFoundException;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
+@Slf4j
 @Service
 @Validated
 @RequiredArgsConstructor
@@ -30,16 +32,23 @@ public class RoleService {
                 request.name(),
                 request.description(),
                 request.permissions());
-        return RoleResponse.from(roleRepository.save(role));
+        Role savedRole = roleRepository.save(role);
+        log.info("Role created: roleId={}", savedRole.getId());
+        return RoleResponse.from(savedRole);
     }
 
     @Transactional(readOnly = true)
     public Page<RoleSummaryResponse> getRoles(@NotNull Pageable pageable) {
+        log.debug(
+                "Getting roles: page={}, size={}",
+                pageable.getPageNumber(),
+                pageable.getPageSize());
         return roleRepository.findAll(pageable).map(RoleSummaryResponse::from);
     }
 
     @Transactional(readOnly = true)
     public RoleResponse getRole(@NotNull @Positive Long roleId) {
+        log.debug("Getting role: roleId={}", roleId);
         return RoleResponse.from(findRole(roleId));
     }
 
@@ -52,7 +61,9 @@ public class RoleService {
                 && roleRepository.existsByName(request.name()))
             throw new RoleAlreadyExistsException(request.name());
         role.setName(request.name());
-        return RoleResponse.from(roleRepository.save(role));
+        Role savedRole = roleRepository.save(role);
+        log.info("Role name updated: roleId={}", roleId);
+        return RoleResponse.from(savedRole);
     }
 
     @Transactional
@@ -61,7 +72,9 @@ public class RoleService {
             @Valid UpdateRoleDescriptionRequest request) {
         Role role = findRole(roleId);
         role.setDescription(request.description());
-        return RoleResponse.from(roleRepository.save(role));
+        Role savedRole = roleRepository.save(role);
+        log.info("Role description updated: roleId={}", roleId);
+        return RoleResponse.from(savedRole);
     }
 
     @Transactional
@@ -70,7 +83,9 @@ public class RoleService {
             @Valid UpdateRolePermissionsRequest request) {
         Role role = findRole(roleId);
         role.updatePermissions(request.permissions());
-        return RoleResponse.from(roleRepository.save(role));
+        Role savedRole = roleRepository.save(role);
+        log.info("Role permissions updated: roleId={}", roleId);
+        return RoleResponse.from(savedRole);
     }
 
     @Transactional
@@ -78,6 +93,7 @@ public class RoleService {
         if (!roleRepository.existsById(roleId))
             throw new RoleNotFoundException(roleId);
         roleRepository.deleteById(roleId);
+        log.info("Role deleted: roleId={}", roleId);
     }
 
     private Role findRole(@NotNull @Positive Long roleId) {
