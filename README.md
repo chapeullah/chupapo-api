@@ -4,7 +4,7 @@ This repository contains the source code for the REST API created to power the [
 
 ## Features
 
-- Role-based access
+- Role-based access control
 - Session-based authentication
 - CSRF protection
 - Argon2 password hashing
