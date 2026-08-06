@@ -1,7 +1,6 @@
 package org.chapeullah.chupapoapi.authorization.model;
 
 public enum Permission {
-
     /* ACCOUNTS */
     ACCOUNTS_CREATE,
     ACCOUNTS_READ,
@@ -12,6 +11,11 @@ public enum Permission {
     ROLES_CREATE,
     ROLES_READ,
     ROLES_UPDATE,
-    ROLES_DELETE
+    ROLES_DELETE,
 
+    /* PROJECT */
+    PROJECTS_CREATE,
+    PROJECTS_READ,
+    PROJECTS_UPDATE,
+    PROJECTS_DELETE
 }

@@ -33,7 +33,8 @@ public class Account {
                             constraint = "char_length(username) >= 5"),
                     @CheckConstraint(
                             name = "ck_accounts_username_format",
-                            constraint = "username ~ '^[a-zA-Z0-9_]+$'")})
+                            constraint = "username ~ '^[a-zA-Z0-9_]+$'")
+            })
     private String username;
 
     @Setter

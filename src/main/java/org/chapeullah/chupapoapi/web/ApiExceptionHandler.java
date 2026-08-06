@@ -5,6 +5,8 @@ import org.chapeullah.chupapoapi.authorization.exception.RoleNotFoundException;
 import org.chapeullah.chupapoapi.account.exception.AccountAlreadyExistsException;
 import org.chapeullah.chupapoapi.account.exception.AccountNotFoundException;
 
+import org.chapeullah.chupapoapi.project.exception.ProjectAlreadyExistsException;
+import org.chapeullah.chupapoapi.project.exception.ProjectNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.security.core.AuthenticationException;
@@ -16,7 +18,8 @@ public class ApiExceptionHandler {
 
     @ExceptionHandler({
             AccountNotFoundException.class,
-            RoleNotFoundException.class
+            RoleNotFoundException.class,
+            ProjectNotFoundException.class
     })
     public ProblemDetail handleNotFound(RuntimeException exception) {
         return problem(HttpStatus.NOT_FOUND, exception.getMessage());
@@ -24,7 +27,8 @@ public class ApiExceptionHandler {
 
     @ExceptionHandler({
             AccountAlreadyExistsException.class,
-            RoleAlreadyExistsException.class
+            RoleAlreadyExistsException.class,
+            ProjectAlreadyExistsException.class
     })
     public ProblemDetail handleAlreadyExists(RuntimeException exception) {
         return problem(HttpStatus.CONFLICT, exception.getMessage());

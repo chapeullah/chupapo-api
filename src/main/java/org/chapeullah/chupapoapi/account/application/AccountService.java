@@ -100,17 +100,17 @@ public class AccountService {
         accountRepository.deleteById(accountId);
     }
 
-    private Account findAccount(@NotNull @Positive Long accountId) {
+    private Account findAccount(Long accountId) {
         return accountRepository.findById(accountId)
                 .orElseThrow(() -> new AccountNotFoundException(accountId));
     }
 
-    private Role findRole(@NotNull @Positive Long roleId) {
+    private Role findRole(Long roleId) {
         return roleRepository.findById(roleId)
                 .orElseThrow(() -> new RoleNotFoundException(roleId));
     }
 
-    private Role findRole(@NotNull String roleName) {
+    private Role findRole(String roleName) {
         return roleRepository.findByName(roleName)
                 .orElseThrow(() -> new RoleNotFoundException(roleName));
     }

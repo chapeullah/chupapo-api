@@ -11,7 +11,6 @@ public record AccountResponse(
         boolean enabled,
         Instant createdAt,
         Instant updatedAt) {
-
     public static AccountResponse from(Account account) {
         return new AccountResponse(
                 account.getId(),
@@ -21,5 +20,4 @@ public record AccountResponse(
                 account.getCreatedAt(),
                 account.getUpdatedAt());
     }
-
 }

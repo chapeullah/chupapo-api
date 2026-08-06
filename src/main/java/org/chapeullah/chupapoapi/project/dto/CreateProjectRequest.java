@@ -1,0 +1,54 @@
+package org.chapeullah.chupapoapi.project.dto;
+
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.*;
+import org.hibernate.validator.constraints.URL;
+
+import java.time.LocalDate;
+import java.util.Set;
+
+public record CreateProjectRequest(
+
+        @NotBlank(message = "Slug must not be blank")
+        @Size(
+                max = 128,
+                message = "Slug must not exceed 128 characters")
+        @Pattern(
+                regexp = "^[a-zA-Z0-9_]+$",
+                message = "Slug may contain only English letters, digits, and underscores")
+        String slug,
+
+        @NotBlank(message = "Author name must not be blank")
+        @Size(
+                max = 128,
+                message = "Author name must not exceed 128 characters")
+        String authorName,
+
+        @NotBlank(message = "Author URL must not be blank")
+        @Size(
+                max = 8192,
+                message = "Author URL must not exceed 8192 characters")
+        @URL(message = "Author URL must be valid")
+        String authorUrl,
+
+        @NotBlank(message = "Repository URL must not be blank")
+        @Size(
+                max = 8192,
+                message = "Repository URL must not exceed 8192 characters")
+        @URL(message = "Repository URL must be valid")
+        String repositoryUrl,
+
+        @NotNull(message = "Release date must not be null")
+        @PastOrPresent(message = "Release date must be in the past or present")
+        LocalDate releaseDate,
+
+        @NotEmpty(message = "Project tags must not be empty")
+        Set<
+                @NotBlank(message = "Project tag must not be blank")
+                @Size(
+                        max = 32,
+                        message = "Project tag must not exceed 32 characters")
+                        String> tags,
+
+        @NotEmpty(message = "Project previews must not be empty")
+        Set<@Valid CreateProjectPreviewRequest> previews) {}

@@ -52,7 +52,8 @@ public class AccountController {
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('ACCOUNTS_READ')")
     @ResponseStatus(HttpStatus.OK)
-    public AccountResponse getAccount(@PathVariable(name = "id") Long accountId) {
+    public AccountResponse getAccount(
+            @PathVariable(name = "id") Long accountId) {
         return accountService.getAccount(accountId);
     }
 
