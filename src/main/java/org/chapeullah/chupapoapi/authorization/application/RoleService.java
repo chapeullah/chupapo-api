@@ -33,7 +33,7 @@ public class RoleService {
                 request.description(),
                 request.permissions());
         Role savedRole = roleRepository.save(role);
-        log.info("Role created: roleId={}", savedRole.getId());
+        log.info("Role created: roleId={}, name={}", savedRole.getId(), savedRole.getName());
         return RoleResponse.from(savedRole);
     }
 
