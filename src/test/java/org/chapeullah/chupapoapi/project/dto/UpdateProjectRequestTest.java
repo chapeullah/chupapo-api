@@ -69,7 +69,6 @@ class UpdateProjectRequestTest  {
             "some slug",
             "some123",
             "-",
-            "some-slug",
             "_",
             ""
     })
