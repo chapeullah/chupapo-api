@@ -10,17 +10,17 @@ import jakarta.validation.constraints.Size;
 import org.hibernate.validator.constraints.URL;
 
 import java.time.LocalDate;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Stream;
 
 public record UpdateProjectRequest(
-
         @Size(
                 max = 128,
                 message = "Slug must not exceed 128 characters")
         @Pattern(
-                regexp = "^[a-zA-Z0-9_]+$",
-                message = "Slug may contain only English letters, digits, and underscores")
+                regexp = "^[a-z]+(?:-[a-z]+)*$",
+                message = "Slug must contain only lowercase English letters separated by single hyphens")
         String slug,
 
         @Size(
@@ -66,19 +66,17 @@ public record UpdateProjectRequest(
                 min = 1,
                 message = "Project previews must not be empty")
         Set<@Valid CreateProjectPreviewRequest> previews) {
-
-    // TODO
     @JsonIgnore
     @AssertTrue(message = "At least one project field must be provided")
     public boolean isAnyFieldPresent() {
         return Stream.of(
-                        slug,
-                        authorName,
-                        authorUrl,
-                        repositoryUrl,
-                        releaseDate,
-                        tags,
-                        previews)
-                .anyMatch(value -> value != null);
+                slug,
+                authorName,
+                authorUrl,
+                repositoryUrl,
+                releaseDate,
+                tags,
+                previews)
+                .anyMatch(Objects::nonNull);
     }
 }

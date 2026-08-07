@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.chapeullah.chupapoapi.project.application.ProjectService;
 import org.chapeullah.chupapoapi.project.dto.CreateProjectRequest;
 import org.chapeullah.chupapoapi.project.dto.ProjectResponse;
+import org.chapeullah.chupapoapi.project.dto.UpdateProjectRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -52,8 +53,9 @@ public class ProjectController {
     @PreAuthorize("hasAuthority('PROJECTS_UPDATE')")
     @ResponseStatus(HttpStatus.OK)
     public ProjectResponse updateProject(
-            @PathVariable(name = "id") Long projectId) {
-
+            @PathVariable(name = "id") Long projectId,
+            @Valid @RequestBody UpdateProjectRequest request) {
+        return projectService.updateProject(projectId, request);
     }
 
     @DeleteMapping("/{id}")

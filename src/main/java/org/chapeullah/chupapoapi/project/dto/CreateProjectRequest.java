@@ -14,8 +14,8 @@ public record CreateProjectRequest(
                 max = 128,
                 message = "Slug must not exceed 128 characters")
         @Pattern(
-                regexp = "^[a-zA-Z0-9_]+$",
-                message = "Slug may contain only English letters, digits, and underscores")
+                regexp = "^[a-z]+(?:-[a-z]+)*$",
+                message = "Slug must contain only lowercase English letters separated by single hyphens")
         String slug,
 
         @NotBlank(message = "Author name must not be blank")

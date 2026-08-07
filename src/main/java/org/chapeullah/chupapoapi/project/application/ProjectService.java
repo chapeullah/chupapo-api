@@ -68,10 +68,8 @@ public class ProjectService {
             @NotNull @Positive Long projectId,
             @Valid UpdateProjectRequest request) {
         Project project = findProject(projectId);
-        if (request.slug() != null) {
-            if (request.slug().equals(project.getSlug()))
-
-        }
+        return new ProjectResponse(
+                null, null, null, null, null, null, null, null, null, null);
     }
 
     @Transactional
