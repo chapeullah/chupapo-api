@@ -2,7 +2,6 @@ package org.chapeullah.chupapoapi.project.dto;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
-import org.chapeullah.chupapoapi.localization.model.Language;
 import org.hibernate.validator.constraints.URL;
 
 import java.time.LocalDate;
