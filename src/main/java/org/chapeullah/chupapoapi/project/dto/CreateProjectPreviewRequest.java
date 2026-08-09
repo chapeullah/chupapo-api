@@ -3,7 +3,7 @@ package org.chapeullah.chupapoapi.project.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import org.chapeullah.chupapoapi.project.model.Language;
+import org.chapeullah.chupapoapi.localization.model.Language;
 import org.chapeullah.chupapoapi.project.model.Theme;
 import org.hibernate.validator.constraints.URL;
 

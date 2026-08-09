@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.chapeullah.chupapoapi.localization.model.Language;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

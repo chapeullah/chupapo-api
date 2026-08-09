@@ -2,11 +2,8 @@ package org.chapeullah.chupapoapi.project.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.AssertTrue;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.PastOrPresent;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
+import org.chapeullah.chupapoapi.localization.model.Language;
 import org.hibernate.validator.constraints.URL;
 
 import java.time.LocalDate;
@@ -54,6 +51,15 @@ public record UpdateProjectRequest(
 
         @Size(
                 min = 1,
+                message = "Project translations must not be empty")
+        Map<
+                @NotNull(message = "Translation language must not be null")
+                        Language,
+                @NotNull(message = "Project translation must not be null")
+                @Valid ProjectTranslationRequest> translations,
+
+        @Size(
+                min = 1,
                 message = "Project tags must not be empty")
         Set<
                 @NotBlank(message = "Project tag must not be blank")
@@ -65,7 +71,9 @@ public record UpdateProjectRequest(
         @Size(
                 min = 1,
                 message = "Project previews must not be empty")
-        Set<@Valid CreateProjectPreviewRequest> previews) {
+        Set<
+                @NotNull(message = "Project preview must not be null")
+                @Valid CreateProjectPreviewRequest> previews) {
     @JsonIgnore
     @AssertTrue(message = "At least one project field must be provided")
     public boolean isAnyFieldPresent() {

@@ -23,6 +23,11 @@ server:
         same-site: lax
 
 app:
+  localization:
+    languages:
+      - RU
+      - EN
+
   bootstrap-admin:
     username: ${APP_BOOTSTRAP_ADMIN_USERNAME:admin}
     password: ${APP_BOOTSTRAP_ADMIN_PASSWORD:}

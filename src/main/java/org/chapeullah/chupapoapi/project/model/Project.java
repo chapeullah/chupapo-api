@@ -5,7 +5,9 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.chapeullah.chupapoapi.localization.model.Language;
 import org.chapeullah.chupapoapi.project.dto.CreateProjectPreviewRequest;
+import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -17,18 +19,25 @@ import java.util.Set;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@Table(name = "projects")
+@Table(
+        name = "projects",
+        uniqueConstraints = @UniqueConstraint(
+                name = "uq_projects_slug",
+                columnNames = "slug"))
 public class Project {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Version
+    @Column(name = "version", nullable = false)
+    private long version;
+
     @Setter
     @Column(
             name = "slug",
             nullable = false,
-            unique = true,
             length = 128)
     private String slug;
 
@@ -40,21 +49,35 @@ public class Project {
     @Column(name = "author_url", nullable = false, columnDefinition = "text")
     private String authorUrl;
 
+    @Setter
     @Column(name = "repository_url", nullable = false, columnDefinition = "text")
     private String repositoryUrl;
 
+    @SuppressWarnings("FieldMayBeFinal")
+    @BatchSize(size = 50)
+    @OneToMany(
+            mappedBy = "project",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private Set<ProjectTranslation> translations = new HashSet<>();
+
+    @SuppressWarnings("FieldMayBeFinal")
+    @BatchSize(size = 50)
     @OneToMany(
             mappedBy = "project",
             cascade = CascadeType.ALL,
             orphanRemoval = true)
     private Set<ProjectTag> tags = new HashSet<>();
 
+    @SuppressWarnings("FieldMayBeFinal")
+    @BatchSize(size = 50)
     @OneToMany(
             mappedBy = "project",
             cascade = CascadeType.ALL,
             orphanRemoval = true)
     private Set<ProjectPreview> previews = new HashSet<>();
 
+    @Setter
     @Column(name = "release_date", nullable = false)
     private LocalDate releaseDate;
 

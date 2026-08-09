@@ -1,6 +1,7 @@
 package org.chapeullah.chupapoapi.authorization.web;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.chapeullah.chupapoapi.authorization.application.RoleService;
 import org.chapeullah.chupapoapi.authorization.dto.*;
@@ -42,7 +43,9 @@ public class RoleController {
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('ROLES_READ')")
     @ResponseStatus(HttpStatus.OK)
-    public RoleResponse getRole(@PathVariable(name = "id") Long roleId) {
+    public RoleResponse getRole(
+            @Positive(message = "Role ID must be positive")
+            @PathVariable(name = "id") Long roleId) {
         return roleService.getRole(roleId);
     }
 
@@ -59,6 +62,7 @@ public class RoleController {
     @PreAuthorize("hasAuthority('ROLES_UPDATE')")
     @ResponseStatus(HttpStatus.OK)
     public RoleResponse updateDescription(
+            @Positive(message = "Role ID must be positive")
             @PathVariable(name = "id") Long roleId,
             @Valid @RequestBody UpdateRoleDescriptionRequest request) {
         return roleService.updateRoleDescription(roleId, request);
@@ -68,6 +72,7 @@ public class RoleController {
     @PreAuthorize("hasAuthority('ROLES_UPDATE')")
     @ResponseStatus(HttpStatus.OK)
     public RoleResponse updatePermissions(
+            @Positive(message = "Role ID must be positive")
             @PathVariable(name = "id") Long roleId,
             @Valid @RequestBody UpdateRolePermissionsRequest request) {
         return roleService.updateRolePermissions(roleId, request);
@@ -76,7 +81,9 @@ public class RoleController {
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('ROLES_DELETE')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteRole(@PathVariable(name = "id") Long roleId) {
+    public void deleteRole(
+            @Positive(message = "Role ID must be positive")
+            @PathVariable(name = "id") Long roleId) {
         roleService.deleteRole(roleId);
     }
 

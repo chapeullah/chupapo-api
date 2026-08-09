@@ -1,6 +1,7 @@
 package org.chapeullah.chupapoapi.project.web;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.chapeullah.chupapoapi.project.application.ProjectService;
 import org.chapeullah.chupapoapi.project.dto.CreateProjectRequest;
@@ -45,6 +46,7 @@ public class ProjectController {
     @PreAuthorize("hasAuthority('PROJECTS_READ')")
     @ResponseStatus(HttpStatus.OK)
     public ProjectResponse getProject(
+            @Positive(message = "Project ID must be positive")
             @PathVariable(name = "id") Long projectId) {
         return projectService.getProject(projectId);
     }
@@ -53,6 +55,7 @@ public class ProjectController {
     @PreAuthorize("hasAuthority('PROJECTS_UPDATE')")
     @ResponseStatus(HttpStatus.OK)
     public ProjectResponse updateProject(
+            @Positive(message = "Project ID must be positive")
             @PathVariable(name = "id") Long projectId,
             @Valid @RequestBody UpdateProjectRequest request) {
         return projectService.updateProject(projectId, request);
@@ -62,6 +65,7 @@ public class ProjectController {
     @PreAuthorize("hasAuthority('PROJECTS_DELETE')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteAccount(
+            @Positive(message = "Project ID must be positive")
             @PathVariable(name = "id") Long projectId) {
         projectService.deleteProject(projectId);
     }

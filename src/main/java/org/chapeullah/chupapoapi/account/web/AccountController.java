@@ -1,6 +1,7 @@
 package org.chapeullah.chupapoapi.account.web;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.chapeullah.chupapoapi.account.application.AccountService;
 import org.chapeullah.chupapoapi.account.dto.*;
@@ -12,16 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-/**
- * POST   /api/accounts
- * GET    /api/accounts/{id}
- * PUT    /api/accounts/{id}/username
- * PUT    /api/accounts/{id}/role
- * PUT    /api/accounts/{id}/password
- * POST   /api/accounts/{id}/enable
- * POST   /api/accounts/{id}/disable
- * DELETE /api/accounts/{id}
- */
 @RestController
 @RequestMapping("/api/accounts")
 @RequiredArgsConstructor
@@ -53,6 +44,7 @@ public class AccountController {
     @PreAuthorize("hasAuthority('ACCOUNTS_READ')")
     @ResponseStatus(HttpStatus.OK)
     public AccountResponse getAccount(
+            @Positive(message = "Account ID must be positive")
             @PathVariable(name = "id") Long accountId) {
         return accountService.getAccount(accountId);
     }
@@ -61,6 +53,7 @@ public class AccountController {
     @PreAuthorize("hasAuthority('ACCOUNTS_UPDATE')")
     @ResponseStatus(HttpStatus.OK)
     public AccountResponse updateAccountUsername(
+            @Positive(message = "Account ID must be positive")
             @PathVariable(name = "id") Long accountId,
             @Valid @RequestBody UpdateAccountUsernameRequest request) {
         return accountService.updateAccountUsername(accountId, request);
@@ -70,6 +63,7 @@ public class AccountController {
     @PreAuthorize("hasAuthority('ACCOUNTS_UPDATE')")
     @ResponseStatus(HttpStatus.OK)
     public AccountResponse updateAccountRole(
+            @Positive(message = "Account ID must be positive")
             @PathVariable(name = "id") Long accountId,
             @Valid @RequestBody UpdateAccountRoleRequest request) {
         return accountService.updateAccountRole(accountId, request);
@@ -79,6 +73,7 @@ public class AccountController {
     @PreAuthorize("hasAuthority('ACCOUNTS_UPDATE')")
     @ResponseStatus(HttpStatus.OK)
     public AccountResponse updateAccountPassword(
+            @Positive(message = "Account ID must be positive")
             @PathVariable(name = "id") Long accountId,
             @Valid @RequestBody UpdateAccountPasswordRequest request) {
         return accountService.updateAccountPassword(accountId, request);
@@ -87,21 +82,27 @@ public class AccountController {
     @PostMapping("/{id}/enable")
     @PreAuthorize("hasAuthority('ACCOUNTS_UPDATE')")
     @ResponseStatus(HttpStatus.OK)
-    public AccountResponse enableAccount(@PathVariable(name = "id") Long accountId) {
+    public AccountResponse enableAccount(
+            @Positive(message = "Account ID must be positive")
+            @PathVariable(name = "id") Long accountId) {
         return accountService.enableAccount(accountId);
     }
 
     @PostMapping("/{id}/disable")
     @PreAuthorize("hasAuthority('ACCOUNTS_UPDATE')")
     @ResponseStatus(HttpStatus.OK)
-    public AccountResponse disableAccount(@PathVariable(name = "id") Long accountId) {
+    public AccountResponse disableAccount(
+            @Positive(message = "Account ID must be positive")
+            @PathVariable(name = "id") Long accountId) {
         return accountService.disableAccount(accountId);
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('ACCOUNTS_DELETE')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteAccount(@PathVariable(name = "id") Long accountId) {
+    public void deleteAccount(
+            @Positive(message = "Account ID must be positive")
+            @PathVariable(name = "id") Long accountId) {
         accountService.deleteAccount(accountId);
     }
 

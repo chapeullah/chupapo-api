@@ -2,8 +2,11 @@ package org.chapeullah.chupapoapi.project.model;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.chapeullah.chupapoapi.localization.model.Language;
 
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(
@@ -22,7 +25,7 @@ public class ProjectTranslation {
     private Project project;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "language", nullable = false, length = 2)
+    @Column(name = "language", nullable = false, length = 16)
     private Language language;
 
     @Column(name = "name", nullable = false, length = 100)
@@ -42,6 +45,15 @@ public class ProjectTranslation {
             String description) {
         this.project = project;
         this.language = language;
+        this.name = name;
+        this.projectType = projectType;
+        this.description = description;
+    }
+
+    public void updateContent(
+            String name,
+            String projectType,
+            String description) {
         this.name = name;
         this.projectType = projectType;
         this.description = description;

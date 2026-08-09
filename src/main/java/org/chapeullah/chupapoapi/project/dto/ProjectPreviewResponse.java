@@ -1,6 +1,6 @@
 package org.chapeullah.chupapoapi.project.dto;
 
-import org.chapeullah.chupapoapi.project.model.Language;
+import org.chapeullah.chupapoapi.localization.model.Language;
 import org.chapeullah.chupapoapi.project.model.ProjectPreview;
 import org.chapeullah.chupapoapi.project.model.Theme;
 
