@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.chapeullah.chupapoapi.localization.model.Language;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -24,9 +23,8 @@ public class ProjectTranslation {
     @JoinColumn(name = "project_id", nullable = false)
     private Project project;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "language", nullable = false, length = 16)
-    private Language language;
+    private String language;
 
     @Column(name = "name", nullable = false, length = 100)
     private String name;
@@ -39,7 +37,7 @@ public class ProjectTranslation {
 
     public ProjectTranslation(
             Project project,
-            Language language,
+            String language,
             String name,
             String projectType,
             String description) {

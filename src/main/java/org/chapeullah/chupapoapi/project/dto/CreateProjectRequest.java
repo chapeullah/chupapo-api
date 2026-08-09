@@ -6,6 +6,7 @@ import org.chapeullah.chupapoapi.localization.model.Language;
 import org.hibernate.validator.constraints.URL;
 
 import java.time.LocalDate;
+import java.util.Map;
 import java.util.Set;
 
 public record CreateProjectRequest(
@@ -45,8 +46,10 @@ public record CreateProjectRequest(
 
         @NotEmpty(message = "Project translations must not be empty")
         Map<
-                @NotNull(message = "Translation language must not be null")
-                        Language,
+                @Pattern(
+                        regexp = "^[a-z]{2,3}$",
+                        message = "Language must be a valid lowercase language code")
+                String,
                 @NotNull(message = "Project translation must not be null")
                 @Valid ProjectTranslationRequest> translations,
 

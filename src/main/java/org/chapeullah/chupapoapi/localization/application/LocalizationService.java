@@ -6,5 +6,5 @@ import org.springframework.stereotype.Service;
 public class LocalizationService {
 
     // TODO полностью сделать весь сервис
-    
+
 }
