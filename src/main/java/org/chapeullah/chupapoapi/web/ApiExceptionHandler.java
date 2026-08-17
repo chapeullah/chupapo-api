@@ -19,8 +19,7 @@ public class ApiExceptionHandler {
     @ExceptionHandler({
             AccountNotFoundException.class,
             RoleNotFoundException.class,
-            ProjectNotFoundException.class
-    })
+            ProjectNotFoundException.class})
     public ProblemDetail handleNotFound(RuntimeException exception) {
         return problem(HttpStatus.NOT_FOUND, exception.getMessage());
     }
@@ -28,8 +27,7 @@ public class ApiExceptionHandler {
     @ExceptionHandler({
             AccountAlreadyExistsException.class,
             RoleAlreadyExistsException.class,
-            ProjectAlreadyExistsException.class
-    })
+            ProjectAlreadyExistsException.class})
     public ProblemDetail handleAlreadyExists(RuntimeException exception) {
         return problem(HttpStatus.CONFLICT, exception.getMessage());
     }
